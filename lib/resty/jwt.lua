@@ -699,6 +699,7 @@ local function validate_claims(self, jwt_obj, ...)
       end
 
       local val = claim == str_const.full_obj and cjson_decode(jwt_json) or jwt_obj.payload[claim]
+      ngx.log(ngx.DEBUG, "JWT_JSON: " .. jwt_json)
       local success, ret = pcall(fx, val, claim, jwt_json)
       if not success then
         jwt_obj[str_const.reason] = ret.reason or string.gsub(ret, "^.-:%d-: ", "")
